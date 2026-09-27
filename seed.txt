@@ -1,0 +1,137 @@
+SUPPLY ERP — SEED DATA REFERENCE
+==================================
+
+
+── USERS ──────────────────────────────────────────────────────────────────────
+
+Role               Name                   Email                        Password
+-----------        --------------------   --------------------------   ------------
+ADMIN              System Administrator   admin@supplyerp.local        Password@123
+SALES_USER         Sales Executive        sales@supplyerp.local        Password@123
+
+
+── CUSTOMERS ──────────────────────────────────────────────────────────────────
+
+Company                      Contact Person   Mobile        Email                          City
+--------------------------   --------------   -----------   ----------------------------   ------
+Apex Fabrication Pvt Ltd     Priya Nair       9876501001    priya@apexfabrication.in       Pune
+Vertex Process Systems       Rohan Mehta      9876501002    rohan@vertexprocess.in         Nashik
+
+
+── PRODUCTS & INVENTORY ───────────────────────────────────────────────────────
+
+Code       Product Name                      Category             Unit   Base Price (INR)   Physical Qty
+---------  --------------------------------  -------------------  -----  -----------------  ------------
+PROD-001   CNC Turning Center                Machine Tools        Unit   1,850,000          80
+PROD-002   Industrial Gearbox                Power Transmission   Unit      85,000          90
+PROD-003   Hydraulic Power Pack              Hydraulics           Unit     325,000         100
+PROD-004   Pneumatic Control Valve           Pneumatics           Unit       8,500         130
+PROD-005   Conveyor Drive Motor              Material Handling    Unit      68,000          75
+PROD-006   PLC Control Panel                 Automation           Unit     245,000          60
+PROD-007   Servo Motor Drive                 Automation           Unit     120,000          50
+PROD-008   Variable Frequency Drive          Electrical           Unit      45,000          65
+PROD-009   Rotary Screw Air Compressor       Utilities            Unit     780,000          12
+PROD-010   Industrial Water Chiller          Cooling Systems      Unit     450,000          18
+PROD-011   Belt Conveyor Module              Material Handling    Meter     22,000         150
+PROD-012   Stainless Steel Mixing Tank       Process Equipment    Unit     275,000          20
+PROD-013   Centrifugal Process Pump          Pumps                Unit      55,000          45
+PROD-014   Industrial Boiler Burner          Thermal Systems      Unit     380,000          10
+PROD-015   Shell and Tube Heat Exchanger     Process Equipment    Unit     195,000          22
+PROD-016   Sheet Metal Bending Press         Machine Tools        Unit   1,250,000           8
+PROD-017   Welding Robot Cell                Automation           Unit   2,200,000           6
+PROD-018   Safety Light Curtain              Industrial Safety    Unit      35,000          75
+PROD-019   Load Cell Weighing System         Instrumentation      Unit      95,000          30
+PROD-020   Industrial Sensor Kit             Instrumentation      Set       18,000         100
+
+All products start with reserved_qty = 0.
+
+
+── ENQUIRIES ──────────────────────────────────────────────────────────────────
+
+Number          Customer                     Date         Required     Status   Notes
+--------------  ---------------------------  -----------  -----------  -------  ------------------------------------
+ENQ-2026-0001   Apex Fabrication Pvt Ltd     2026-01-10   2026-02-15   WON      Replacement equipment for fabrication line.
+ENQ-2026-0002   Vertex Process Systems       2026-02-05   2026-03-20   WON      New process line expansion.
+ENQ-2026-0003   Apex Fabrication Pvt Ltd     2026-03-01   2026-04-10   QUOTED   Automation upgrade request.
+
+Enquiry Items:
+  ENQ-2026-0001 → PROD-001 × 20,  PROD-002 × 10
+  ENQ-2026-0002 → PROD-003 × 15,  PROD-004 × 25
+  ENQ-2026-0003 → PROD-006 × 5
+
+
+── QUOTATIONS ─────────────────────────────────────────────────────────────────
+
+Number          Enquiry         Customer                     Valid Until   Disc%   GST%   Total (INR)    Status
+--------------  --------------  ---------------------------  ------------  ------  -----  -------------  --------
+QUO-2026-0001   ENQ-2026-0001   Apex Fabrication Pvt Ltd     2026-01-31    5%      18%    42,429,850     ACCEPTED
+QUO-2026-0002   ENQ-2026-0002   Vertex Process Systems       2026-02-28    0%      18%     6,003,250     ACCEPTED
+QUO-2026-0003   ENQ-2026-0003   Apex Fabrication Pvt Ltd     2026-03-31    0%      18%     1,445,500     SENT
+
+Quotation Line Items:
+  QUO-2026-0001
+    PROD-001 × 20  @ 1,850,000  → line amount  41,477,000
+    PROD-002 × 10  @    85,000  → line amount     952,850
+
+  QUO-2026-0002
+    PROD-003 × 15  @   325,000  → line amount   5,752,500
+    PROD-004 × 25  @     8,500  → line amount     250,750
+
+  QUO-2026-0003
+    PROD-006 × 5   @   245,000  → line amount   1,445,500
+
+
+── SALES ORDERS ───────────────────────────────────────────────────────────────
+
+Number         Quotation       Customer                     Order Date   Total (INR)    Status
+-------------  --------------  ---------------------------  -----------  -------------  ----------
+SO-2026-0001   QUO-2026-0001   Apex Fabrication Pvt Ltd     2026-01-15   42,429,850     DISPATCHED
+SO-2026-0002   QUO-2026-0002   Vertex Process Systems       2026-02-08    6,003,250     PENDING
+
+Sales Order Items:
+  SO-2026-0001
+    PROD-001 × 20  @ 1,850,000  → line amount  41,477,000
+    PROD-002 × 10  @    85,000  → line amount     952,850
+
+  SO-2026-0002
+    PROD-003 × 15  @   325,000  → line amount   5,752,500
+    PROD-004 × 25  @     8,500  → line amount     250,750
+
+
+── DISPATCHES ─────────────────────────────────────────────────────────────────
+
+Number          Sales Order    Dispatch Date   Vehicle       Driver
+--------------  -------------  --------------  ------------  ----------
+DSP-2026-0001   SO-2026-0001   2026-01-18      MH12AB1234    Ravi Kumar
+
+Dispatch Items:
+  DSP-2026-0001 → PROD-001 × 20,  PROD-002 × 10
+
+
+── WORKFLOW SUMMARY ───────────────────────────────────────────────────────────
+
+Scenario 1 — Fully dispatched (Apex Fabrication):
+  ENQ-2026-0001 (WON) → QUO-2026-0001 (ACCEPTED) → SO-2026-0001 (DISPATCHED) → DSP-2026-0001
+
+Scenario 2 — Pending confirmation (Vertex Process):
+  ENQ-2026-0002 (WON) → QUO-2026-0002 (ACCEPTED) → SO-2026-0002 (PENDING)
+  Action required: Admin must confirm SO-2026-0002 to reserve stock, then dispatch.
+
+Scenario 3 — Quotation sent, awaiting acceptance (Apex Fabrication):
+  ENQ-2026-0003 (QUOTED) → QUO-2026-0003 (SENT)
+  Action required: Sales user must accept or reject QUO-2026-0003.
+
+
+── HOW TO RESEED ──────────────────────────────────────────────────────────────
+
+1. Drop and recreate the database:
+   psql -U postgres -c "DROP DATABASE supply_erp;"
+   psql -U postgres -c "CREATE DATABASE supply_erp;"
+
+2. Apply the schema:
+   psql -U postgres -d supply_erp -f backend/schema.sql
+
+3. Run the seed script:
+   cd backend
+   npm run seed
+
