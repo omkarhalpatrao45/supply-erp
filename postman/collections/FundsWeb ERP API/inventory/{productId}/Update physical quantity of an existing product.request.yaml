@@ -1,0 +1,50 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/inventory/:productId"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: productId
+    value: "9681"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: json
+  content: |-
+    {
+      "physical_qty": 150
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "physical_qty": {
+          "type": "integer",
+          "example": 150
+        }
+      },
+      "required": [
+        "physical_qty"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Update physical quantity of an existing product.resources/examples
+order: 1000

@@ -1,0 +1,893 @@
+openapi: 3.0.3
+info:
+  title: FundsWeb ERP API
+  version: 1.0.0
+  description: |
+    ERP backend for customers, enquiries, quotations, sales orders, inventory, and JWT-based authentication.
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: admin@supplyerp.local
+        password:
+          type: string
+          example: Password@123
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        user:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: System Administrator
+        email:
+          type: string
+          example: admin@supplyerp.local
+        role:
+          type: string
+          enum: [ADMIN, SALES_USER]
+          example: ADMIN
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        company_name:
+          type: string
+          example: Apex Fabrication Pvt Ltd
+        contact_person:
+          type: string
+          example: Ravi Shah
+        mobile:
+          type: string
+          example: 9876500001
+        email:
+          type: string
+          nullable: true
+          example: ravi@apex.in
+        city:
+          type: string
+          nullable: true
+          example: Mumbai
+        created_at:
+          type: string
+          format: date-time
+          example: 2026-09-27T10:00:00.000Z
+    Product:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          example: 1
+        product_code:
+          type: string
+          example: PROD-001
+        product_name:
+          type: string
+          example: Industrial Gearbox
+        category:
+          type: string
+          example: Mechanical
+        unit:
+          type: string
+          example: Unit
+        base_price:
+          type: number
+          example: 42000
+        physical_qty:
+          type: integer
+          example: 120
+        reserved_qty:
+          type: integer
+          example: 5
+        available_qty:
+          type: integer
+          example: 115
+    CreateCustomerRequest:
+      type: object
+      required:
+        - company_name
+        - contact_person
+        - mobile
+      properties:
+        company_name:
+          type: string
+          example: Apex Industries
+        contact_person:
+          type: string
+          example: Ravi Shah
+        mobile:
+          type: string
+          example: 9876500001
+        email:
+          type: string
+          example: ravi@apex.in
+        city:
+          type: string
+          example: Mumbai
+    EnquiryProduct:
+      type: object
+      properties:
+        product_id:
+          type: integer
+          example: 3
+        quantity:
+          type: integer
+          example: 10
+    CreateEnquiryRequest:
+      type: object
+      required:
+        - customer_id
+        - required_date
+        - products
+      properties:
+        customer_id:
+          type: integer
+          example: 1
+        enquiry_date:
+          type: string
+          format: date
+          example: 2026-09-27
+        required_date:
+          type: string
+          format: date
+          example: 2026-10-05
+        notes:
+          type: string
+          example: Urgent requirement for production line upgrade.
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnquiryProduct'
+    Enquiry:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        enquiry_number:
+          type: string
+          example: ENQ-2026-0005
+        customer_id:
+          type: integer
+          example: 1
+        enquiry_date:
+          type: string
+          format: date
+          example: 2026-09-27
+        required_date:
+          type: string
+          format: date
+          example: 2026-10-05
+        status:
+          type: string
+          example: OPEN
+        notes:
+          type: string
+          nullable: true
+          example: Urgent requirement for production line upgrade.
+        created_by:
+          type: integer
+          example: 2
+        company_name:
+          type: string
+          example: Apex Fabrication Pvt Ltd
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnquiryProductWithMeta'
+    EnquiryProductWithMeta:
+      type: object
+      properties:
+        enquiry_id:
+          type: integer
+          example: 1
+        product_id:
+          type: integer
+          example: 3
+        quantity:
+          type: integer
+          example: 10
+        product_code:
+          type: string
+          example: PROD-003
+        product_name:
+          type: string
+          example: Precision Valve
+        unit:
+          type: string
+          example: Unit
+    QuotationItem:
+      type: object
+      required:
+        - product_id
+        - quantity
+        - unit_price
+      properties:
+        product_id:
+          type: integer
+          example: 3
+        quantity:
+          type: integer
+          example: 10
+        unit_price:
+          type: number
+          example: 325000
+    CreateQuotationRequest:
+      type: object
+      required:
+        - enquiry_id
+        - valid_until
+        - items
+      properties:
+        enquiry_id:
+          type: integer
+          example: 2
+        valid_until:
+          type: string
+          format: date
+          example: 2026-10-31
+        discount_percent:
+          type: number
+          example: 5
+        gst_percent:
+          type: number
+          example: 18
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuotationItem'
+    QuotationStatusRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum: [SENT, ACCEPTED, REJECTED]
+          example: ACCEPTED
+    Quotation:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        quotation_number:
+          type: string
+          example: QUO-2026-0001
+        enquiry_id:
+          type: integer
+          example: 1
+        customer_id:
+          type: integer
+          example: 1
+        valid_until:
+          type: string
+          format: date
+          example: 2026-09-30
+        discount_percent:
+          type: number
+          example: 0
+        gst_percent:
+          type: number
+          example: 18
+        total_amount:
+          type: number
+          example: 752500
+        status:
+          type: string
+          example: ACCEPTED
+        created_at:
+          type: string
+          format: date-time
+          example: 2026-09-21T11:00:00.000Z
+        company_name:
+          type: string
+          example: Apex Fabrication Pvt Ltd
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuotationItemDetail'
+    QuotationItemDetail:
+      type: object
+      properties:
+        quotation_id:
+          type: integer
+          example: 1
+        product_id:
+          type: integer
+          example: 3
+        quantity:
+          type: integer
+          example: 10
+        unit_price:
+          type: number
+          example: 325000
+        discount_percent:
+          type: number
+          example: 5
+        gst_percent:
+          type: number
+          example: 18
+        line_amount:
+          type: number
+          example: 3875000
+        product_code:
+          type: string
+          example: PROD-003
+        product_name:
+          type: string
+          example: Precision Valve
+        unit:
+          type: string
+          example: Unit
+    SalesOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        order_number:
+          type: string
+          example: SO-2026-0001
+        quotation_id:
+          type: integer
+          example: 1
+        customer_id:
+          type: integer
+          example: 1
+        order_date:
+          type: string
+          format: date
+          example: 2026-09-27
+        total_amount:
+          type: number
+          example: 1250000
+        status:
+          type: string
+          example: DISPATCHED
+        company_name:
+          type: string
+          example: Apex Fabrication Pvt Ltd
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderItem'
+    SalesOrderItem:
+      type: object
+      properties:
+        sales_order_id:
+          type: integer
+          example: 1
+        product_id:
+          type: integer
+          example: 3
+        quantity:
+          type: integer
+          example: 8
+        unit_price:
+          type: number
+          example: 150000
+        line_amount:
+          type: number
+          example: 1200000
+        product_code:
+          type: string
+          example: PROD-003
+        product_name:
+          type: string
+          example: Precision Valve
+        unit:
+          type: string
+          example: Unit
+        physical_qty:
+          type: integer
+          example: 100
+        reserved_qty:
+          type: integer
+          example: 0
+        available_qty:
+          type: integer
+          example: 100
+    DispatchRequest:
+      type: object
+      required:
+        - dispatch_date
+        - vehicle_number
+        - driver_name
+      properties:
+        dispatch_date:
+          type: string
+          format: date
+          example: 2026-10-02
+        vehicle_number:
+          type: string
+          example: MH12AB1234
+        driver_name:
+          type: string
+          example: Ravi Kumar
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid email or password.
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Supply ERP backend is running
+
+  /auth/login:
+    post:
+      summary: Login
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Missing or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /customers:
+    get:
+      summary: Get all customers
+      tags: [Customers]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Customer list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
+      summary: Create customer
+      tags: [Customers]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerRequest'
+      responses:
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /enquiries:
+    get:
+      summary: Get all enquiries
+      tags: [Enquiries]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Enquiries list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Enquiry'
+    post:
+      summary: Create enquiry
+      tags: [Enquiries]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnquiryRequest'
+      responses:
+        '201':
+          description: Enquiry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enquiry'
+        '400':
+          description: Validation errors or bad data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /quotations:
+    get:
+      summary: Get all quotations
+      tags: [Quotations]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Quotation list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quotation'
+    post:
+      summary: Create quotation
+      tags: [Quotations]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateQuotationRequest'
+      responses:
+        '201':
+          description: Quotation created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quotation'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /quotations/{id}/status:
+    patch:
+      summary: Update quotation status
+      tags: [Quotations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Quotation ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuotationStatusRequest'
+      responses:
+        '200':
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  status:
+                    type: string
+                    example: ACCEPTED
+        '400':
+          description: Invalid status or workflow issue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /quotations/{id}/convert:
+    post:
+      summary: Convert accepted quotation to sales order
+      tags: [Quotations]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Sales order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesOrder'
+        '400':
+          description: Workflow validation failure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sales-orders:
+    get:
+      summary: Get sales orders
+      tags: [Sales Orders]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Sales orders list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SalesOrder'
+
+  /sales-orders/{id}/confirm:
+    post:
+      summary: Confirm sales order and reserve inventory
+      tags: [Sales Orders]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sales order confirmed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  status:
+                    type: string
+                    example: CONFIRMED
+        '400':
+          description: Inventory or status validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sales-orders/{id}/dispatch:
+    post:
+      summary: Dispatch confirmed sales order
+      tags: [Sales Orders]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DispatchRequest'
+      responses:
+        '201':
+          description: Dispatch created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  dispatch_number:
+                    type: string
+                    example: DSP-2026-0001
+                  sales_order_id:
+                    type: integer
+                    example: 2
+                  dispatch_date:
+                    type: string
+                    format: date
+                    example: 2026-10-02
+                  vehicle_number:
+                    type: string
+                    example: MH12AB1234
+                  driver_name:
+                    type: string
+                    example: Ravi Kumar
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        product_id:
+                          type: integer
+                        quantity:
+                          type: integer
+        '400':
+          description: Dispatch validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /inventory:
+    get:
+      summary: Get inventory data
+      tags: [Inventory]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Inventory list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /inventory/products:
+    post:
+      summary: Create a new product with initial stock
+      tags: [Inventory]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - product_code
+                - product_name
+                - category
+                - unit
+                - base_price
+                - physical_qty
+              properties:
+                product_code:
+                  type: string
+                  example: PROD-021
+                product_name:
+                  type: string
+                  example: Hydraulic Pump
+                category:
+                  type: string
+                  example: Automation
+                unit:
+                  type: string
+                  example: Unit
+                base_price:
+                  type: number
+                  example: 32000
+                physical_qty:
+                  type: integer
+                  example: 50
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /inventory/{productId}:
+    patch:
+      summary: Update physical quantity of an existing product
+      tags: [Inventory]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - physical_qty
+              properties:
+                physical_qty:
+                  type: integer
+                  example: 150
+      responses:
+        '200':
+          description: Inventory updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Quantity validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Product inventory not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

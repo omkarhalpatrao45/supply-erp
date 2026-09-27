@@ -2,11 +2,36 @@
 
 This document provides a Swagger-style API reference for the current FundsWeb ERP backend.
 
-Base URL:
+## Actual API base path
+
+The backend is mounted directly at the app root without an `/api` prefix.
 
 ```text
 http://localhost:5000
 ```
+
+## Exact API paths used by this project
+
+| Method | Path | Access | Purpose |
+| --- | --- | --- | --- |
+| `GET` | `/health` | Public | Check backend status |
+| `POST` | `/auth/login` | Public | Login and receive JWT |
+| `GET` | `/customers` | Admin / Sales | List customers |
+| `POST` | `/customers` | Sales | Create customer |
+| `GET` | `/enquiries` | Admin / Sales | List enquiries |
+| `POST` | `/enquiries` | Sales | Create enquiry |
+| `GET` | `/quotations` | Admin / Sales | List quotations |
+| `POST` | `/quotations` | Sales | Create quotation |
+| `PATCH` | `/quotations/:id/status` | Sales | Update quotation status |
+| `POST` | `/quotations/:id/convert` | Sales | Convert accepted quotation to sales order |
+| `GET` | `/sales-orders` | Admin / Sales | List sales orders |
+| `POST` | `/sales-orders/:id/confirm` | Admin | Confirm order and reserve stock |
+| `POST` | `/sales-orders/:id/dispatch` | Admin | Dispatch confirmed order |
+| `GET` | `/inventory` | Admin / Sales | View inventory |
+| `POST` | `/inventory/products` | Admin | Create new product with initial stock |
+| `PATCH` | `/inventory/:productId` | Admin | Update physical quantity |
+
+> No product delete endpoint exists in the current backend. There is no `DELETE /products/:id` or `DELETE /inventory/:productId` route in the app.
 
 Authentication:
 

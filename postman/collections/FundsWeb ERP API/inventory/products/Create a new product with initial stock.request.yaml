@@ -1,0 +1,63 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/inventory/products"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "product_code": "PROD-021",
+      "product_name": "Hydraulic Pump",
+      "category": "Automation",
+      "unit": "Unit",
+      "base_price": 32000,
+      "physical_qty": 50
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "product_code": {
+          "type": "string",
+          "example": "PROD-021"
+        },
+        "product_name": {
+          "type": "string",
+          "example": "Hydraulic Pump"
+        },
+        "category": {
+          "type": "string",
+          "example": "Automation"
+        },
+        "unit": {
+          "type": "string",
+          "example": "Unit"
+        },
+        "base_price": {
+          "type": "number",
+          "example": 32000
+        },
+        "physical_qty": {
+          "type": "integer",
+          "example": 50
+        }
+      },
+      "required": [
+        "product_code",
+        "product_name",
+        "category",
+        "unit",
+        "base_price",
+        "physical_qty"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create a new product with initial stock.resources/examples
+order: 1000

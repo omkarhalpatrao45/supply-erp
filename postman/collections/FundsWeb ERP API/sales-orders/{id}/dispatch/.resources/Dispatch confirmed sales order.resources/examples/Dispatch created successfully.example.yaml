@@ -1,0 +1,94 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/sales-orders/:id/dispatch"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  pathVariables:
+    id: "9681"
+  body:
+    type: json
+    content: |-
+      {
+        "dispatch_date": "2026-10-02",
+        "vehicle_number": "MH12AB1234",
+        "driver_name": "Ravi Kumar"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": 1,
+        "dispatch_number": "DSP-2026-0001",
+        "sales_order_id": 2,
+        "dispatch_date": "2026-10-02",
+        "vehicle_number": "MH12AB1234",
+        "driver_name": "Ravi Kumar",
+        "items": [
+          {
+            "product_id": 9519,
+            "quantity": 6381
+          },
+          {
+            "product_id": 6743,
+            "quantity": 1236
+          }
+        ]
+      }
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "dispatch_number": {
+            "type": "string",
+            "example": "DSP-2026-0001"
+          },
+          "sales_order_id": {
+            "type": "integer",
+            "example": 2
+          },
+          "dispatch_date": {
+            "type": "string",
+            "example": "2026-10-02",
+            "format": "date"
+          },
+          "vehicle_number": {
+            "type": "string",
+            "example": "MH12AB1234"
+          },
+          "driver_name": {
+            "type": "string",
+            "example": "Ravi Kumar"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "integer"
+                },
+                "quantity": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+order: 1000

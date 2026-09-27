@@ -1,0 +1,53 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/enquiries"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "customer_id": 1,
+        "required_date": "2026-10-05",
+        "products": [
+          {
+            "product_id": 3,
+            "quantity": 10
+          },
+          {
+            "product_id": 3,
+            "quantity": 10
+          }
+        ],
+        "enquiry_date": "2026-09-27",
+        "notes": "Urgent requirement for production line upgrade."
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "message": "Invalid email or password."
+      }
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid email or password."
+          }
+        }
+      }
+order: 2000

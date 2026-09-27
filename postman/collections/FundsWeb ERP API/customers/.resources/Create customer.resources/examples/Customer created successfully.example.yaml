@@ -1,0 +1,75 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/customers"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "company_name": "Apex Industries",
+        "contact_person": "Ravi Shah",
+        "mobile": "string",
+        "email": "ravi@apex.in",
+        "city": "Mumbai"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": 1,
+        "company_name": "Apex Fabrication Pvt Ltd",
+        "contact_person": "Ravi Shah",
+        "mobile": "string",
+        "email": "ravi@apex.in",
+        "city": "Mumbai",
+        "created_at": "2026-09-27T10:00:00.000Z"
+      }
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "company_name": {
+            "type": "string",
+            "example": "Apex Fabrication Pvt Ltd"
+          },
+          "contact_person": {
+            "type": "string",
+            "example": "Ravi Shah"
+          },
+          "mobile": {
+            "type": "string",
+            "example": 9876500001
+          },
+          "email": {
+            "type": "string",
+            "example": "ravi@apex.in"
+          },
+          "city": {
+            "type": "string",
+            "example": "Mumbai"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2026-09-27T10:00:00.000Z",
+            "format": "date-time"
+          }
+        }
+      }
+order: 1000

@@ -1,0 +1,11 @@
+$kind: collection
+description: |
+  ERP backend for customers, enquiries, quotations, sales orders, inventory, and JWT-based authentication.
+variables:
+  baseUrl: http://localhost:5000
+auth:
+  - id: fb30dbc2-b3c9-49ee-b083-98ca21fec1a5
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{bearerToken}}"

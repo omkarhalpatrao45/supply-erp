@@ -1,0 +1,55 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/quotations/:id/status"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: id
+    value: "9681"
+    disabled: false
+    description: Quotation ID
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: json
+  content: |-
+    {
+      "status": "ACCEPTED"
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "SENT",
+            "ACCEPTED",
+            "REJECTED"
+          ],
+          "example": "ACCEPTED"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Update quotation status.resources/examples
+order: 1000

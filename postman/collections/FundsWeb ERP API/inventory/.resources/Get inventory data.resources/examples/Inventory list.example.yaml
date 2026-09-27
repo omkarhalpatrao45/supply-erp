@@ -1,0 +1,91 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/inventory"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      [
+        {
+          "product_id": 1,
+          "product_code": "PROD-001",
+          "product_name": "Industrial Gearbox",
+          "category": "Mechanical",
+          "unit": "Unit",
+          "base_price": 42000,
+          "physical_qty": 120,
+          "reserved_qty": 5,
+          "available_qty": 115
+        },
+        {
+          "product_id": 1,
+          "product_code": "PROD-001",
+          "product_name": "Industrial Gearbox",
+          "category": "Mechanical",
+          "unit": "Unit",
+          "base_price": 42000,
+          "physical_qty": 120,
+          "reserved_qty": 5,
+          "available_qty": 115
+        }
+      ]
+    $type: |-
+      {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "product_id": {
+              "type": "integer",
+              "example": 1
+            },
+            "product_code": {
+              "type": "string",
+              "example": "PROD-001"
+            },
+            "product_name": {
+              "type": "string",
+              "example": "Industrial Gearbox"
+            },
+            "category": {
+              "type": "string",
+              "example": "Mechanical"
+            },
+            "unit": {
+              "type": "string",
+              "example": "Unit"
+            },
+            "base_price": {
+              "type": "number",
+              "example": 42000
+            },
+            "physical_qty": {
+              "type": "integer",
+              "example": 120
+            },
+            "reserved_qty": {
+              "type": "integer",
+              "example": 5
+            },
+            "available_qty": {
+              "type": "integer",
+              "example": 115
+            }
+          }
+        }
+      }
+order: 1000

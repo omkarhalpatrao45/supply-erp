@@ -1,0 +1,194 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/sales-orders"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      [
+        {
+          "id": 1,
+          "order_number": "SO-2026-0001",
+          "quotation_id": 1,
+          "customer_id": 1,
+          "order_date": "2026-09-27",
+          "total_amount": 1250000,
+          "status": "DISPATCHED",
+          "company_name": "Apex Fabrication Pvt Ltd",
+          "items": [
+            {
+              "sales_order_id": 1,
+              "product_id": 3,
+              "quantity": 8,
+              "unit_price": 150000,
+              "line_amount": 1200000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit",
+              "physical_qty": 100,
+              "reserved_qty": 0,
+              "available_qty": 100
+            },
+            {
+              "sales_order_id": 1,
+              "product_id": 3,
+              "quantity": 8,
+              "unit_price": 150000,
+              "line_amount": 1200000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit",
+              "physical_qty": 100,
+              "reserved_qty": 0,
+              "available_qty": 100
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "order_number": "SO-2026-0001",
+          "quotation_id": 1,
+          "customer_id": 1,
+          "order_date": "2026-09-27",
+          "total_amount": 1250000,
+          "status": "DISPATCHED",
+          "company_name": "Apex Fabrication Pvt Ltd",
+          "items": [
+            {
+              "sales_order_id": 1,
+              "product_id": 3,
+              "quantity": 8,
+              "unit_price": 150000,
+              "line_amount": 1200000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit",
+              "physical_qty": 100,
+              "reserved_qty": 0,
+              "available_qty": 100
+            },
+            {
+              "sales_order_id": 1,
+              "product_id": 3,
+              "quantity": 8,
+              "unit_price": 150000,
+              "line_amount": 1200000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit",
+              "physical_qty": 100,
+              "reserved_qty": 0,
+              "available_qty": 100
+            }
+          ]
+        }
+      ]
+    $type: |-
+      {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "order_number": {
+              "type": "string",
+              "example": "SO-2026-0001"
+            },
+            "quotation_id": {
+              "type": "integer",
+              "example": 1
+            },
+            "customer_id": {
+              "type": "integer",
+              "example": 1
+            },
+            "order_date": {
+              "type": "string",
+              "example": "2026-09-27",
+              "format": "date"
+            },
+            "total_amount": {
+              "type": "number",
+              "example": 1250000
+            },
+            "status": {
+              "type": "string",
+              "example": "DISPATCHED"
+            },
+            "company_name": {
+              "type": "string",
+              "example": "Apex Fabrication Pvt Ltd"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "sales_order_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "product_id": {
+                    "type": "integer",
+                    "example": 3
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "example": 8
+                  },
+                  "unit_price": {
+                    "type": "number",
+                    "example": 150000
+                  },
+                  "line_amount": {
+                    "type": "number",
+                    "example": 1200000
+                  },
+                  "product_code": {
+                    "type": "string",
+                    "example": "PROD-003"
+                  },
+                  "product_name": {
+                    "type": "string",
+                    "example": "Precision Valve"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "example": "Unit"
+                  },
+                  "physical_qty": {
+                    "type": "integer",
+                    "example": 100
+                  },
+                  "reserved_qty": {
+                    "type": "integer",
+                    "example": 0
+                  },
+                  "available_qty": {
+                    "type": "integer",
+                    "example": 100
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+order: 1000

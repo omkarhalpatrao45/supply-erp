@@ -1,0 +1,35 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "admin@supplyerp.local",
+      "password": "Password@123"
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "admin@supplyerp.local"
+        },
+        "password": {
+          "type": "string",
+          "example": "Password@123"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    }
+settings: {}
+examples: ./.resources/Login.resources/examples
+order: 1000

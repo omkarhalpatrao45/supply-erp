@@ -1,0 +1,55 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/quotations"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "enquiry_id": 2,
+        "valid_until": "2026-10-31",
+        "items": [
+          {
+            "product_id": 3,
+            "quantity": 10,
+            "unit_price": 325000
+          },
+          {
+            "product_id": 3,
+            "quantity": 10,
+            "unit_price": 325000
+          }
+        ],
+        "discount_percent": 5,
+        "gst_percent": 18
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "message": "Invalid email or password."
+      }
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid email or password."
+          }
+        }
+      }
+order: 2000

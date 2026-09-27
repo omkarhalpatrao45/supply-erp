@@ -1,0 +1,88 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/quotations"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "enquiry_id": 2,
+      "valid_until": "2026-10-31",
+      "items": [
+        {
+          "product_id": 3,
+          "quantity": 10,
+          "unit_price": 325000
+        },
+        {
+          "product_id": 3,
+          "quantity": 10,
+          "unit_price": 325000
+        }
+      ],
+      "discount_percent": 5,
+      "gst_percent": 18
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "enquiry_id": {
+          "type": "integer",
+          "example": 2
+        },
+        "valid_until": {
+          "type": "string",
+          "example": "2026-10-31",
+          "format": "date"
+        },
+        "discount_percent": {
+          "type": "number",
+          "example": 5
+        },
+        "gst_percent": {
+          "type": "number",
+          "example": 18
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "integer",
+                "example": 3
+              },
+              "quantity": {
+                "type": "integer",
+                "example": 10
+              },
+              "unit_price": {
+                "type": "number",
+                "example": 325000
+              }
+            },
+            "required": [
+              "product_id",
+              "quantity",
+              "unit_price"
+            ]
+          }
+        }
+      },
+      "required": [
+        "enquiry_id",
+        "valid_until",
+        "items"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create quotation.resources/examples
+order: 2000

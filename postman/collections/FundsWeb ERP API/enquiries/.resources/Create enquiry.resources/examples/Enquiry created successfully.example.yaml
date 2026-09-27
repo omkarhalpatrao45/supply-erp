@@ -1,0 +1,145 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/enquiries"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: json
+    content: |-
+      {
+        "customer_id": 1,
+        "required_date": "2026-10-05",
+        "products": [
+          {
+            "product_id": 3,
+            "quantity": 10
+          },
+          {
+            "product_id": 3,
+            "quantity": 10
+          }
+        ],
+        "enquiry_date": "2026-09-27",
+        "notes": "Urgent requirement for production line upgrade."
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": 5,
+        "enquiry_number": "ENQ-2026-0005",
+        "customer_id": 1,
+        "enquiry_date": "2026-09-27",
+        "required_date": "2026-10-05",
+        "status": "OPEN",
+        "notes": "Urgent requirement for production line upgrade.",
+        "created_by": 2,
+        "company_name": "Apex Fabrication Pvt Ltd",
+        "products": [
+          {
+            "enquiry_id": 1,
+            "product_id": 3,
+            "quantity": 10,
+            "product_code": "PROD-003",
+            "product_name": "Precision Valve",
+            "unit": "Unit"
+          },
+          {
+            "enquiry_id": 1,
+            "product_id": 3,
+            "quantity": 10,
+            "product_code": "PROD-003",
+            "product_name": "Precision Valve",
+            "unit": "Unit"
+          }
+        ]
+      }
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 5
+          },
+          "enquiry_number": {
+            "type": "string",
+            "example": "ENQ-2026-0005"
+          },
+          "customer_id": {
+            "type": "integer",
+            "example": 1
+          },
+          "enquiry_date": {
+            "type": "string",
+            "example": "2026-09-27",
+            "format": "date"
+          },
+          "required_date": {
+            "type": "string",
+            "example": "2026-10-05",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "example": "OPEN"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Urgent requirement for production line upgrade."
+          },
+          "created_by": {
+            "type": "integer",
+            "example": 2
+          },
+          "company_name": {
+            "type": "string",
+            "example": "Apex Fabrication Pvt Ltd"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "enquiry_id": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "product_id": {
+                  "type": "integer",
+                  "example": 3
+                },
+                "quantity": {
+                  "type": "integer",
+                  "example": 10
+                },
+                "product_code": {
+                  "type": "string",
+                  "example": "PROD-003"
+                },
+                "product_name": {
+                  "type": "string",
+                  "example": "Precision Valve"
+                },
+                "unit": {
+                  "type": "string",
+                  "example": "Unit"
+                }
+              }
+            }
+          }
+        }
+      }
+order: 1000

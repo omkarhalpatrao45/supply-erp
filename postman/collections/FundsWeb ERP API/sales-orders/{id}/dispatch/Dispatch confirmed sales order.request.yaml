@@ -1,0 +1,63 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/sales-orders/:id/dispatch"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  - key: id
+    value: "9681"
+    disabled: false
+    description: ""
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      }
+body:
+  type: json
+  content: |-
+    {
+      "dispatch_date": "2026-10-02",
+      "vehicle_number": "MH12AB1234",
+      "driver_name": "Ravi Kumar"
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "dispatch_date": {
+          "type": "string",
+          "example": "2026-10-02",
+          "format": "date"
+        },
+        "vehicle_number": {
+          "type": "string",
+          "example": "MH12AB1234"
+        },
+        "driver_name": {
+          "type": "string",
+          "example": "Ravi Kumar"
+        }
+      },
+      "required": [
+        "dispatch_date",
+        "vehicle_number",
+        "driver_name"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Dispatch confirmed sales order.resources/examples
+order: 1000

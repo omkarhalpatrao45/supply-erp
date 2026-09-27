@@ -1,0 +1,78 @@
+$kind: http-request
+description: ""
+url: "{{baseUrl}}/enquiries"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "customer_id": 1,
+      "required_date": "2026-10-05",
+      "products": [
+        {
+          "product_id": 3,
+          "quantity": 10
+        },
+        {
+          "product_id": 3,
+          "quantity": 10
+        }
+      ],
+      "enquiry_date": "2026-09-27",
+      "notes": "Urgent requirement for production line upgrade."
+    }
+  $type: |-
+    {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "enquiry_date": {
+          "type": "string",
+          "example": "2026-09-27",
+          "format": "date"
+        },
+        "required_date": {
+          "type": "string",
+          "example": "2026-10-05",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string",
+          "example": "Urgent requirement for production line upgrade."
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "integer",
+                "example": 3
+              },
+              "quantity": {
+                "type": "integer",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "customer_id",
+        "required_date",
+        "products"
+      ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{bearerToken}}"
+settings: {}
+examples: ./.resources/Create enquiry.resources/examples
+order: 2000

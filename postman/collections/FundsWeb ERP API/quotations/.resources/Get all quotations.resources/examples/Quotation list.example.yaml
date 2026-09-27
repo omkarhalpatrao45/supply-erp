@@ -1,0 +1,205 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/quotations"
+  method: GET
+  headers:
+    - key: Accept
+      value: application/json
+    - key: Authorization
+      value: Bearer <token>
+      description: "Added as a part of security scheme: bearer"
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      [
+        {
+          "id": 1,
+          "quotation_number": "QUO-2026-0001",
+          "enquiry_id": 1,
+          "customer_id": 1,
+          "valid_until": "2026-09-30",
+          "discount_percent": 0,
+          "gst_percent": 18,
+          "total_amount": 752500,
+          "status": "ACCEPTED",
+          "created_at": "2026-09-21T11:00:00.000Z",
+          "company_name": "Apex Fabrication Pvt Ltd",
+          "items": [
+            {
+              "quotation_id": 1,
+              "product_id": 3,
+              "quantity": 10,
+              "unit_price": 325000,
+              "discount_percent": 5,
+              "gst_percent": 18,
+              "line_amount": 3875000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit"
+            },
+            {
+              "quotation_id": 1,
+              "product_id": 3,
+              "quantity": 10,
+              "unit_price": 325000,
+              "discount_percent": 5,
+              "gst_percent": 18,
+              "line_amount": 3875000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit"
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "quotation_number": "QUO-2026-0001",
+          "enquiry_id": 1,
+          "customer_id": 1,
+          "valid_until": "2026-09-30",
+          "discount_percent": 0,
+          "gst_percent": 18,
+          "total_amount": 752500,
+          "status": "ACCEPTED",
+          "created_at": "2026-09-21T11:00:00.000Z",
+          "company_name": "Apex Fabrication Pvt Ltd",
+          "items": [
+            {
+              "quotation_id": 1,
+              "product_id": 3,
+              "quantity": 10,
+              "unit_price": 325000,
+              "discount_percent": 5,
+              "gst_percent": 18,
+              "line_amount": 3875000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit"
+            },
+            {
+              "quotation_id": 1,
+              "product_id": 3,
+              "quantity": 10,
+              "unit_price": 325000,
+              "discount_percent": 5,
+              "gst_percent": 18,
+              "line_amount": 3875000,
+              "product_code": "PROD-003",
+              "product_name": "Precision Valve",
+              "unit": "Unit"
+            }
+          ]
+        }
+      ]
+    $type: |-
+      {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "quotation_number": {
+              "type": "string",
+              "example": "QUO-2026-0001"
+            },
+            "enquiry_id": {
+              "type": "integer",
+              "example": 1
+            },
+            "customer_id": {
+              "type": "integer",
+              "example": 1
+            },
+            "valid_until": {
+              "type": "string",
+              "example": "2026-09-30",
+              "format": "date"
+            },
+            "discount_percent": {
+              "type": "number",
+              "example": 0
+            },
+            "gst_percent": {
+              "type": "number",
+              "example": 18
+            },
+            "total_amount": {
+              "type": "number",
+              "example": 752500
+            },
+            "status": {
+              "type": "string",
+              "example": "ACCEPTED"
+            },
+            "created_at": {
+              "type": "string",
+              "example": "2026-09-21T11:00:00.000Z",
+              "format": "date-time"
+            },
+            "company_name": {
+              "type": "string",
+              "example": "Apex Fabrication Pvt Ltd"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "quotation_id": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "product_id": {
+                    "type": "integer",
+                    "example": 3
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "example": 10
+                  },
+                  "unit_price": {
+                    "type": "number",
+                    "example": 325000
+                  },
+                  "discount_percent": {
+                    "type": "number",
+                    "example": 5
+                  },
+                  "gst_percent": {
+                    "type": "number",
+                    "example": 18
+                  },
+                  "line_amount": {
+                    "type": "number",
+                    "example": 3875000
+                  },
+                  "product_code": {
+                    "type": "string",
+                    "example": "PROD-003"
+                  },
+                  "product_name": {
+                    "type": "string",
+                    "example": "Precision Valve"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "example": "Unit"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+order: 1000
